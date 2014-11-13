@@ -1,6 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <windows.h>
 
 using namespace std;
 
@@ -11,19 +12,14 @@ public:
 	void DrawTree();
 
 private:
-	char leaves_symbol;
-	char trunk_symbol;
-	unsigned int base;
-	unsigned int height;
-	string input;
+	char leaves_symbol, trunk_symbol;
+	unsigned int base, height;
 
 	vector<string> tree;
 	vector<string> leaves;
 	string trunk;
 
-	void MakeTrunk();
 	void DrawTrunk();
-	void MakeLeaves();
 	void DrawLeaves();
 
 	void HowBigTree();

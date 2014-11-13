@@ -4,29 +4,25 @@
 void GenerateTree::AskForInput()
 {
 	cout << "Please insert input text (an integer and two characters, all space-delimited): " << endl;
-	cin >> base >> trunk_symbol >> leaves_symbol;
-
+	while((base % 2 != 1) && (base > 21 || base < 3))
+	{
+		cin >> base >> trunk_symbol >> leaves_symbol;
+	}
 	//Ask for input data (u int, char, char)
 }
 
-void GenerateTree::MakeTrunk()
+void GenerateTree::DrawTrunk()
 {
-	for (int n=0;n<9;n++)
+	for (int n=0;n<height-2;n++)
 	{
-		trunk.push_back(' '); //Fill string "trunk" with 10 spaces
+		trunk.push_back(' '); //Fill string with spaces
 	}
 	for (int n=0;n<3;n++)
 	{
 		trunk.push_back(trunk_symbol); //Fill string trunk with 3 trunk symbols
 	}
 
-}
-
-void GenerateTree::DrawTrunk()
-{
 	cout << trunk << endl;
-
-	//Draw tree's trunk
 }
 
 void GenerateTree::HowBigTree()
@@ -44,25 +40,35 @@ void GenerateTree::HowBigTree()
 
 	//Check how many levels leaves must have
 }
-void GenerateTree::MakeLeaves()
+void GenerateTree::DrawLeaves()
 {
-	
-	HowBigTree();
+	unsigned int numberOfWhiteSpaces=height-1;
+	unsigned int numberOfLeaves=1;
 
-	int numberOfWhiteSpaces=10;
-	int numberOfLeaves=1;
+	unsigned int numberOfBaubles = 0;
+	unsigned int bauble_pos = 0;
+
 	int level = height-1;
 
 	while(numberOfLeaves<base+2)
 	{
-		for(int n=0; n<numberOfWhiteSpaces; n++)
-		{
-			leaves[level].push_back(' ');
-		}
-
-		for(int n=0; n<numberOfLeaves; n++)
+		
+		for(int n=0; n<numberOfLeaves; n++) //Add leaves
 		{
 			leaves[level].push_back(leaves_symbol);
+		}
+
+		numberOfBaubles = numberOfLeaves/2;
+		for (int n=0;n<numberOfBaubles;n++) //Replace some leaves with baubles
+		{
+			bauble_pos = rand() % numberOfLeaves;
+			leaves[level].replace(bauble_pos,1,"o");
+		}
+		
+
+		for(int n=0; n<numberOfWhiteSpaces; n++) //Add white spaces
+		{
+			leaves[level].insert(leaves[level].begin(),' ');
 		}
 
 		level--;
@@ -70,26 +76,32 @@ void GenerateTree::MakeLeaves()
 		numberOfLeaves += 2;
 	}
 
-	//Fill each level of leaves with appropriate number of spaces and leaves
-}
-
-void GenerateTree::DrawLeaves()
-{
-	for(int n=height-1; n>-1 ; n--)
+		for(int n=height-1; n>-1 ; n--)
 	{
 		cout << leaves[n] << endl;
 	}
 
-	//Draw tree's leaves
+	//Fill each level of leaves with appropriate number of spaces and leaves
 }
 
 void GenerateTree::DrawTree()
 {
-	
-		MakeLeaves();
-		DrawLeaves();
-		MakeTrunk();
-		DrawTrunk();
+		HowBigTree();
+		while(1)
+		{
+			system("cls");
+
+			for(int n=0;n<leaves.size();n++)
+			{
+				leaves[n].clear();
+				trunk.clear();
+			}
+
+			DrawLeaves();
+			DrawTrunk();
+			Sleep(100);
+		}
 
 		//Draw tree
 }
+
